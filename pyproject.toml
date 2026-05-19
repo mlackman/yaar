@@ -11,6 +11,7 @@ requires-python = ">=3.13"
 dependencies = [
     "jira>=3.10.5",
     "pydantic-ai>=1.25.1",
+    "pydantic-ai-slim[google]>=1.88.0",
     "requests>=2.32.5",
 ]
 

@@ -2,8 +2,6 @@ import sys
 import os
 import asyncio
 
-from pydantic_ai.mcp import MCPServerStdio 
-
 from yaar.models import Agent, Model 
 from yaar.tools import all_tools
 from .session import session
@@ -48,10 +46,12 @@ ALWAYS prefer MCP graph tools over grep/glob/file-search for code discovery.
 - Who calls it: `trace_path(function_name="OrderHandler", direction="inbound")`
 - Read source: `get_code_snippet(qualified_name="pkg/orders.OrderHandler")`
 <!-- codebase-memory-mcp:end -->
-
+    '''
+    system_prompt = '''
 # Project
     - root {os.getcwd()}
     '''
+    """
     code_memory = MCPServerStdio(
         timeout=10,
         command="/Users/mlackman/.local/bin/codebase-memory-mcp",
@@ -59,13 +59,14 @@ ALWAYS prefer MCP graph tools over grep/glob/file-search for code discovery.
         tool_prefix="",
         allow_sampling=False,
     )
+    """
  
     main_agent = Agent(
         name='Generic-ai', 
-        model=Model.GPT_55,
+        model=Model.GEMINI_31_FLASH_LITE,
         system_prompt=system_prompt,
         description='generic llm ai',
-        toolsets=[code_memory, *all_tools()],        
+        toolsets=[*all_tools()],
         api_key=api_key
     )
 
