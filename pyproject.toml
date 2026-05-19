@@ -1,0 +1,35 @@
+[build-system]
+requires = ["hatchling >= 1.26"]
+build-backend = "hatchling.build"
+
+[project]
+name = "yaar"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "jira>=3.10.5",
+    "pydantic-ai>=1.25.1",
+    "requests>=2.32.5",
+]
+
+[tool-hatch-build]
+include = [
+    "yaar/prompts/agents/*.md",
+    "yaar/prompts/commands/*.md", 
+    "yaar/prompts/*.md" 
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.3",
+    "pytest-asyncio>=1.3.0",
+    "ruff>=0.15.6",
+]
+
+[project.scripts]
+yaar-research = "yaar.cli.research:main"
+yaar-implement = "yaar.cli.implement:main"
+yaar-plan = "yaar.cli.plan:main"
+yaar-ai = "yaar.cli.ai:main"
