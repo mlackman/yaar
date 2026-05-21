@@ -14,10 +14,7 @@ from pydantic_ai.providers.openai import OpenAIProvider
 from pydantic_ai.models.google import GoogleModel
 from pydantic_ai.providers.google import GoogleProvider
 
-
-
 type LoggingFactory = Callable[['Session'], Logging]
-
 
 @dataclasses.dataclass(frozen=True)
 class Response:
@@ -101,10 +98,10 @@ class Logging:
         print(s, file=self._session_file, end='', flush=True)
 
     def tool_usage(self, tool: BaseToolCallPart) -> None:
-        self.output(f'\nUSING TOOL: {tool.tool_name}, args {tool.args_as_dict()}')
+        self.output(f'\nUSING TOOL: {tool.tool_name}, args {tool.args_as_dict()}\n')
 
     def usage(self, usage: RunUsage) -> None:
-        self.output(f'\nTOKEN USAGE: {usage}') 
+        self.output(f'\nTOKEN USAGE: {usage}\n')
 
 
 class LoggingOutputToStd(Logging):
