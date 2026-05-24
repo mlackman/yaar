@@ -13,6 +13,7 @@ from pydantic_ai.models.openai import OpenAIResponsesModel, OpenAIResponsesModel
 from pydantic_ai.providers.openai import OpenAIProvider
 from pydantic_ai.models.google import GoogleModel
 from pydantic_ai.providers.google import GoogleProvider
+from pydantic_ai.models.test import TestModel
 
 type LoggingFactory = Callable[['Session'], Logging]
 
@@ -23,9 +24,11 @@ class Response:
 
 
 class Model(enum.Enum):
+    TEST=0
     GPT_54_THINKING=1
     GPT_55=2
     GEMINI_31_FLASH_LITE=3
+
 
     @classmethod
     def create(cls, model: 'Model', api_key: str) -> pydantic_ai.models.Model:
@@ -35,6 +38,9 @@ class Model(enum.Enum):
             openai_text_verbosity='medium',
             openai_reasoning_generate_summary='detailed',
         )
+
+        if model == Model.TEST:
+            return TestModel()
 
         if model == Model.GPT_54_THINKING:
             return OpenAIResponsesModel(
