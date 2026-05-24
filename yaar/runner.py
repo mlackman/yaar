@@ -1,6 +1,7 @@
+import dataclasses
 from typing import Callable, Protocol, Sequence
 
-from pydantic_ai import Agent, BaseToolCallPart, PartEndEvent, RunUsage, ThinkingPart, UsageLimits
+from pydantic_ai import Agent, BaseToolCallPart, PartEndEvent, RunUsage, ThinkingPart, UsageLimits, AgentRunResult
 from pydantic_ai import (
     FunctionToolCallEvent,
     FinalResultEvent,
@@ -9,13 +10,17 @@ from pydantic_ai import (
     PartStartEvent,
     ModelMessage
 )
-
-from .models import Deps, Response 
+from pydantic_ai.tools import AgentDepsT
 
 type Log = Callable[[str], None]
 type ToolUsageLog = Callable[[BaseToolCallPart], None] 
 type UsageLog = Callable[[RunUsage], None]
 
+
+@dataclasses.dataclass(frozen=True)
+class Response:
+    text: str  # the textual response of the agent
+    response: AgentRunResult
 
 class AgentLog(Protocol):
     debug: Log
@@ -28,7 +33,7 @@ async def run_agent(
     agent: Agent,
     prompt: str,
     log: AgentLog,
-    deps: Deps,
+    deps: AgentDepsT,
     message_history: Sequence[ModelMessage] | None = None
 ) -> Response:
     final_response: Response | None = None

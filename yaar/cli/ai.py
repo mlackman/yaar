@@ -6,7 +6,7 @@ from yaar.models import Agent, Model
 from yaar.tools import all_tools
 from .session import session
 from .subagents import all_sub_agents
-from yaar.agent import start_agent_with_session
+from yaar.session import start_agent_with_session
 
 
 def main():

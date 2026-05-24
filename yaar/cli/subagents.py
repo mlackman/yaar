@@ -1,4 +1,5 @@
-from yaar.models import Agent, Model, Session
+from yaar.models import Agent, Model
+from yaar import Session
 from yaar.tools import all_tools
 from yaar.prompts import load_prompt
 from yaar.agent import create_mcps

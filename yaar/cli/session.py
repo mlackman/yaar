@@ -3,10 +3,12 @@ import os
 import pathlib
 import sys
 
-from yaar.models import Session, LoggingOutputToStd, Logging, Agent, Model
+from yaar.session import Session, start_agent_with_session
+from yaar.logging import LoggingOutputToStd, Logging, LogDestinations
+from yaar import Agent, Model
 from yaar.prompts import load_prompt
 from yaar.tools import all_tools 
-from yaar.agent import start_agent_with_session, create_mcps
+from yaar.agent import  create_mcps
 from .subagents import all_sub_agents
 
 
@@ -49,6 +51,6 @@ def run_agent(prompt_filename: str, agent_name: str, description: str):
 
 def session(session_name: str, previous_session: str | None) -> Session:
 
-    def create_main_agent_loggin(session: Session) -> Logging:
-        return LoggingOutputToStd(session)
+    def create_main_agent_loggin(dests: LogDestinations) -> Logging:
+        return LoggingOutputToStd(dests)
     return Session.create_main_session(session_name, pathlib.Path('./.session/'), create_main_agent_loggin, previous_session)

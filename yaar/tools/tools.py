@@ -5,8 +5,8 @@ import subprocess
 
 from pydantic_ai import RunContext, AbstractToolset, FunctionToolset, Tool
 
-from yaar.models import Deps
-from yaar.runner import run_agent
+from ..session import Deps
+from ..runner import run_agent
 
 
 def all_tools() -> Sequence[AbstractToolset[Deps|None]]:
