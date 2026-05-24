@@ -1,5 +1,6 @@
 from typing import Sequence, Callable
 import dataclasses
+import datetime
 import enum
 import io
 import random
@@ -120,7 +121,7 @@ class Session:
 
     @staticmethod
     def create_main_session(session_name: str, path: pathlib.Path, logging_factory: LoggingFactory, previous_session: str | None = None) -> 'Session':
-        session_id = f'{session_name}_{random.randint(1000, 100000)}'
+        session_id = f'{session_name}_{datetime.datetime.now().isoformat()}_{random.randint(1000, 100000)}'
         session_path = pathlib.Path(path / session_id)
         session_path.mkdir(parents=True)
         return Session(session_name, session_path, session_id, logging_factory, previous_session)
