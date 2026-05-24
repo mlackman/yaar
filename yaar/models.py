@@ -144,7 +144,7 @@ class Session:
         return Logging(session)
 
     def save_prompt(self, system_prompt: str, prompt: str) -> None:
-        with open(self.path / f'{self.session_name}.prompt', 'wt') as f:
+        with open(self.path / 'prompt', 'wt') as f:
             f.write(system_prompt)
             f.write('\n')
             f.write(prompt)
